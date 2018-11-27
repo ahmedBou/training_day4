@@ -67,12 +67,17 @@ cur.execute(statement_2)
 # -3 so that was a two step process and we could simplify that and do it all at once
 '''i dont want just customer_id i wanted it see the name of who made the order and this lead us to join 
 so its take two tables and we can join them by take the data from one and from another and stick them '''
-# implicit inner join
+# .1 implicit inner join
 # statement_3 = 'SELECT * FROM customers, orders WHERE customers.id = orders.customer_id'
 # if we want just the first name last_name order_date and amount
 statement_3 = 'SELECT first_name, last_name, order_date, amount FROM customers, orders' \
                'WHERE customers.id = orders.customer_id'
 # so we have joined them together using what's know an an implicit inner join 
+# .2 explicit inner join
+statement_4 = 'SELECT first_name, last_name, order_date, amount  FROM customers' \
+                'JOIN orders ON customers.id = orders.customer_id'
+
+
 cnx.commit()
 
 cnx.close()
