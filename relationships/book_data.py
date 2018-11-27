@@ -49,10 +49,30 @@ ins_orders = "INSERT INTO orders(orders_date, amount, customer_id)" \
                   "('2016/06/01', 12.50, 2)," \
                   "('2018/03/10', 99.99, 5)" 
 
-cur.execute(ins_orders)
+#cur.execute(ins_orders)
 # cur.execute(ins_orders)
-
-
+# 2. JOIN:
+# let's say i want to find the orders that have been placed by bruce willis
+# -1 where gonna first try to find the customers that ho's make that orders in customers table
+statement = 'SELECT * FROM customers WHERE last_name="Willis"'
+cur.execute(statement)
+# to delete: delete from customers where id>5;
+#-2 then i try to find where is the orders in the orders table
+statement_2 = 'SELECT * FROM orders WHERE customer_id = 1'
+''' SELECT * FROM orders WHERE customer_id = 
+        (
+            SELECT id FROM customers WHERE last_name="Willis"
+        )'''    
+cur.execute(statement_2)
+# -3 so that was a two step process and we could simplify that and do it all at once
+'''i dont want just customer_id i wanted it see the name of who made the order and this lead us to join 
+so its take two tables and we can join them by take the data from one and from another and stick them '''
+# implicit inner join
+# statement_3 = 'SELECT * FROM customers, orders WHERE customers.id = orders.customer_id'
+# if we want just the first name last_name order_date and amount
+statement_3 = 'SELECT first_name, last_name, order_date, amount FROM customers, orders' \
+               'WHERE customers.id = orders.customer_id'
+# so we have joined them together using what's know an an implicit inner join 
 cnx.commit()
 
 cnx.close()
